@@ -24,4 +24,5 @@ urlpatterns = [
     path('saludar/',views.saludo),
     path('despedirse/',views.despedida),
     path('index/',views.index),
+    path('base2/',views.base2),
 ]
