@@ -1,7 +1,7 @@
 from datetime import datetime
 from django.http import HttpResponse
 from django.template import Template, Context
-
+from django.shortcuts import render
 
 def saludo (request):
     documento="""<html><body><h1>Hola mundo</h1></body></html>"""
@@ -19,9 +19,4 @@ def index(request):
     return HttpResponse(documento)
 
 def base(request):
-    doc_externo=open("C:\\Users\\d-sko\\Desktop\\pag\\PRUEBA\\PRUEBA\\__base.html")
-    plt=Template(doc_externo.read())
-    doc_externo.close()
-    ctx=Context()
-    documento=plt.render(ctx)
-    return HttpResponse(documento)
+    return render(request,'__base.html')
