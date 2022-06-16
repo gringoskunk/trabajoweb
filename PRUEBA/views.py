@@ -19,4 +19,4 @@ def index(request):
     return HttpResponse(documento)
 
 def base(request):
-    return render(request,'__base.html')
+    return render(request,'index.html')
