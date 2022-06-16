@@ -19,10 +19,9 @@ from . import views
 
 
 urlpatterns = [
-     path('', views.base, name='base'),
+    path('', views.index, name='index'),
     path('admin/', admin.site.urls),
-    path('saludar/',views.saludo),
-    path('despedirse/',views.despedida),
-    path('index/',views.index),
-    path('base2/',views.base2),
+    path('saludar/', views.saludo),
+    path('despedirse/', views.despedida),
+    path('pokemon/', views.traer_pokemon),
 ]

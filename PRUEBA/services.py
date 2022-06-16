@@ -11,4 +11,4 @@ def get_pokemon():
     if response:
        pokemon = response.get()
        return pokemon
-    return ''
+    return { 'error': 'No se pudo obtener el pokemon' }
