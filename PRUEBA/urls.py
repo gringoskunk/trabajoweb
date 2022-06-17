@@ -14,9 +14,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import include, path
 from . import views
+from rest_framework import routers
+from PRUEBA.API import views as api_views
 
+router = routers.DefaultRouter()
+router.register(r'users', api_views.UserViewSet)
+router.register(r'groups', api_views.GroupViewSet)
+router.register(r'pokemonapi', api_views.PokemonViewSet)
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -24,4 +30,6 @@ urlpatterns = [
     path('saludar/', views.saludo),
     path('despedirse/', views.despedida),
     path('pokemon/', views.traer_pokemon),
+    path('', include(router.urls)),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
