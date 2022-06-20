@@ -19,5 +19,5 @@ def traer_pokemon(requests):
         pokemon = get_pokemon()
         return render(requests, 'pokemon.html', {'pokemon': pokemon})
     except Exception as e:
-        return render(requests, 'pokemon.html', {'pokemon': {'nombre': 'pikachu', 'error': 'Es entero penca, pero es lo que hay'}})
+        return render(requests, 'pokemon.html', {'pokemon': {'name': 'zapato', 'type': 'Es entero penca, pero es lo que hay'}})
 

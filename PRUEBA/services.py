@@ -7,8 +7,10 @@ def generate_request(url, params={}):
         return response.json()
 
 def get_pokemon():
-    response = generate_request('http://localhost:5000/pokemon')
-    if response:
-       pokemon = response.get()
+    json_response = generate_request('http://localhost:8000/pokemonapi')
+
+    if json_response:
+       pokemon = json_response['results'][0]
+       print (pokemon)
        return pokemon
     return { 'error': 'No se pudo obtener el pokemon' }
