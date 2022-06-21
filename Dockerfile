@@ -6,7 +6,7 @@
 FROM python:3.9.6-alpine as builder
 
 # set work directory
-WORKDIR /usr/src/app
+WORKDIR /app
 
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -14,7 +14,7 @@ ENV PYTHONUNBUFFERED 1
 
 # install dependencies
 COPY ./requirements.txt .
-RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/app/wheels -r requirements.txt
+RUN pip wheel --no-cache-dir --no-deps --wheel-dir /app/wheels -r requirements.txt
 
 
 #########
@@ -22,7 +22,7 @@ RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/app/wheels -r requir
 #########
 
 # pull official base image
-FROM python:3.9.6-alpine
+FROM python:3.9.6-alpine as staticbuilder 
 
 # create directory for the app user
 RUN mkdir -p /home/app
@@ -31,14 +31,14 @@ RUN mkdir -p /home/app
 RUN addgroup -S app && adduser -S app -G app
 
 # create the appropriate directories
-ENV HOME=/home/app
 ENV APP_HOME=/home/app/web
 RUN mkdir $APP_HOME
+RUN mkdir $APP_HOME/staticfiles
 WORKDIR $APP_HOME
 
 # install dependencies
-COPY --from=builder /usr/src/app/wheels /wheels
-COPY --from=builder /usr/src/app/requirements.txt .
+COPY --from=builder /app/wheels /wheels
+COPY --from=builder /app/requirements.txt .
 RUN pip install --no-cache /wheels/*
 
 # copy project
@@ -49,5 +49,9 @@ RUN chown -R app:app $APP_HOME
 
 # change to the app user
 USER app
+
+RUN export SECRET_KEY=x \
+	&& python manage.py collectstatic --no-input -v0 \
+	&& echo "Static filesystem populated"
 
 CMD [ "gunicorn","PRUEBA.wsgi:application","--bind","0.0.0.0:8000" ]
