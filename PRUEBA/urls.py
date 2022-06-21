@@ -15,24 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-from . import views
-from rest_framework import routers
-from PRUEBA.API import views as api_views
 from django.conf import settings
 from django.conf.urls.static import static
 
 
-router = routers.DefaultRouter()
-router.register(r'users', api_views.UserViewSet)
-router.register(r'groups', api_views.GroupViewSet)
-router.register(r'pokemonapi', api_views.PokemonViewSet)
-
 urlpatterns = [
-    path('', views.index, name='index'),
-    path('admin/', admin.site.urls),
-    path('saludar/', views.saludo),
-    path('despedirse/', views.despedida),
-    path('pokemon/', views.traer_pokemon),
-    path('', include(router.urls)),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    path('admin/', admin.site.urls),          # The admin panel
+    path('', include('pages.urls')),
+    path('pokemon/', include('pokemon.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -54,4 +54,6 @@ RUN export SECRET_KEY=x \
 	&& python manage.py collectstatic --no-input -v0 \
 	&& echo "Static filesystem populated"
 
-CMD [ "gunicorn","PRUEBA.wsgi:application","--bind","0.0.0.0:8000" ]
+ENV PORT=8000
+
+CMD gunicorn PRUEBA.wsgi:application --bind 0.0.0.0:$PORT
