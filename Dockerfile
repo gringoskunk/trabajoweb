@@ -57,3 +57,5 @@ RUN export SECRET_KEY=x \
 ENV PORT=8000
 
 CMD gunicorn PRUEBA.wsgi:application --bind 0.0.0.0:$PORT
+
+# correr con: docker run --rm -e PORT=8000 -p 8000:8000 trabajoweb
