@@ -23,4 +23,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),          # The admin panel
     path('', include('pages.urls')),
     path('pokemon/', include('pokemon.urls')),
+    path('planta/', include('apiPlanta.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
